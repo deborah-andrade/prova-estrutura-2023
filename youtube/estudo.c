@@ -65,8 +65,8 @@ void inserir(ArvB *arv, int valor){
 
 void imprimir(No *raiz){
     if (raiz != NULL) {
-        printf("%d ", raiz->conteudo);
         imprimir(raiz->esq);
+        printf("%d ", raiz->conteudo);
         imprimir(raiz->dir);  //(*raiz.esquerda )
     }
 }
