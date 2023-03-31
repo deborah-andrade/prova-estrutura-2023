@@ -2,6 +2,8 @@
 #include <stdlib.h>
 #include "estudo.h"
 
+
+
 void inserirEsq(No *no, int valor){ /*confere primeiro se tem algo na esquerda*/
      if (no->esq == NULL){
         No *novo = (No*)malloc(sizeof(No));
@@ -22,10 +24,25 @@ void inserirEsq(No *no, int valor){ /*confere primeiro se tem algo na esquerda*/
 }
 
 void inserirDir(No *no, int valor){
+    if (no->dir == NULL){
+        No *novo = (No*)malloc(sizeof(No));
+        novo->conteudo = valor;
+        novo->esq = NULL;
+        novo->dir = NULL;
+        no->dir = novo;
+    }
+    else {
+        if (valor > no->dir->conteudo){
+            inserirDir(no->dir, valor);
+        }
+        else {
+            inserirEsq(no->dir, valor);
+         }
+     }
 
 }
 
-void iniserir(ArvB *arv, int valor){
+void inserir(ArvB *arv, int valor){
     if (arv->raiz == NULL) {
         No *novo = (No*)malloc(sizeof(No));
         novo->conteudo = valor;
@@ -37,11 +54,46 @@ void iniserir(ArvB *arv, int valor){
     
     else { /*se o valor q vou adc for menor que o da raiz, irei para a esquerda */
         if (valor< arv->raiz->conteudo) {
-            inserirEsq(arv->raiz, valor); /**/
+            inserirEsq(arv->raiz, valor);
         }
 
         else {
             inserirDir(arv->raiz, valor);
         }
     }
+}
+
+void imprimir(No *raiz){
+    if (raiz != NULL) {
+        printf("%d ", raiz->conteudo);
+        imprimir(raiz->esq);
+        imprimir(raiz->dir);  //(*raiz.esquerda )
+    }
+}
+
+int main(){
+    int op, valor;
+    ArvB arv;
+    arv.raiz = NULL; /*usa ponto pois não ha ponteiros, fazendo manipulação de objetos. é ponteiro, usa seta, não é usa ponto */
+
+    do
+    {
+        printf("\n0- sair\n1-inserir\n2-imprimir\n");
+        scanf("%d", &op);
+
+
+        switch (op) {
+            case 0: 
+                printf("\nSaindo...\n");
+                break;
+            case 1:
+                printf("Digite um valor: ");
+                scanf("%d", &valor);
+                inserir(&arv, valor);
+                break;
+            case 2:
+                imprimir(arv.raiz);
+         }
+    } while (op != 0);
+    
 }

@@ -13,3 +13,4 @@ typedef struct{
 void iniserir(ArvB *arv, int valor);
 void inserirEsq(No *no, int valor);
 void inserirDir(No *no, int valor);
+void imprimir(No *raiz);
